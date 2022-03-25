@@ -14,11 +14,8 @@ class ListPresenter: NSObject {
     var router: RouterProtocol?
     private var dataManager: CoreDataManagerProtocol!
     private var fetchedResultsController: NSFetchedResultsController<Note>!
-    let defaults = UserDefaults.standard
     
-    
-    // тест для таблицы
-    var result: [Note]?  {
+    var result: [Note]? {
         return self.fetchedResultsController.fetchedObjects
     }
     
@@ -44,7 +41,6 @@ class ListPresenter: NSObject {
             note.text = "Hello, add notes!"
             note.lastUpdated = Date()
             dataManager.save()
-            
             defaults.set(true, forKey: "isFirstLaunch")
         }
     }
@@ -77,6 +73,15 @@ extension ListPresenter: NSFetchedResultsControllerDelegate {
 }
 
 extension ListPresenter: ListPresenterProtocol {
+    func search(_ query: String) {
+        if query.count >= 1 {
+            setupFetchedResultsController(filter: query)
+        } else{
+            setupFetchedResultsController()
+        }
+        view?.updateTable(.reload)
+    }
+    
     func editNote(_ note: Note) {
         router?.showEdit(note: note)
     }
@@ -94,6 +99,4 @@ extension ListPresenter: ListPresenterProtocol {
         firstLaunchCheck()
         setupFetchedResultsController()
     }
-    
-    
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ListViewController: UIViewController {
+final class ListViewController: UIViewController {
     
     var presenter: ListPresenterProtocol!
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
@@ -125,13 +125,24 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let note = presenter.result?[indexPath.row] else { return }
         presenter.editNote(note)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     
 }
 
 extension ListViewController: UISearchBarDelegate, UISearchControllerDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter.search(searchText)
+    }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        presenter.search("")
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        presenter.search(searchBar.text ?? "")
+    }
 }
 
 extension ListViewController: ListViewProtocol {
@@ -157,6 +168,7 @@ extension ListViewController: ListViewProtocol {
         case .update:
             tableView.reloadRows(at: [indexPath!], with: .automatic)
         }
+        //tableView.reloadSections(IndexSet(integer: 0), with: .none)
         refreshCountLbl()
     }
 }

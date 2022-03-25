@@ -12,9 +12,6 @@ final class NoteCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .semibold)
-        //        label.adjustsFontSizeToFitWidth = true
-        //        label.numberOfLines = 1
-        //        label.minimumScaleFactor = 0.5
         return label
     }()
     
@@ -22,9 +19,6 @@ final class NoteCell: UITableViewCell {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15)
         label.textColor = .darkGray
-        //        label.adjustsFontSizeToFitWidth = true
-        //        label.numberOfLines = 1
-        //        label.minimumScaleFactor = 0.5
         return label
     }()
     

@@ -36,7 +36,7 @@ protocol ListPresenterProtocol: AnyObject {
     func viewDidLoad()
     var result: [Note]? { get }
     func delete(_ note: Note)
-    
+    func search(_ query: String)
     func addNote()
     func editNote(_ note: Note)
 }
