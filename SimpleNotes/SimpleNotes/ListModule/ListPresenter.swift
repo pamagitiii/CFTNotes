@@ -25,6 +25,7 @@ class ListPresenter: NSObject {
         self.dataManager = dataManager
     }
     
+    // MARK: - Methods
     private func setupFetchedResultsController(filter: String? = nil) {
         fetchedResultsController = dataManager.createNotesFetchedResultsController(filter: filter)
         fetchedResultsController.delegate = self
@@ -46,6 +47,7 @@ class ListPresenter: NSObject {
     }
 }
 
+// MARK: - Fetched Results Controller Delegate
 extension ListPresenter: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         view?.updateTable(.beginUpdates)
@@ -72,6 +74,7 @@ extension ListPresenter: NSFetchedResultsControllerDelegate {
     }
 }
 
+// MARK: - Protocol Methods
 extension ListPresenter: ListPresenterProtocol {
     func search(_ query: String) {
         if query.count >= 1 {

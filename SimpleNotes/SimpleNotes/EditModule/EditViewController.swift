@@ -12,6 +12,7 @@ class EditViewController: UIViewController {
     var presenter: EditPresenterProtocol!
     private let textView = UITextView()
     
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTextView()
@@ -22,6 +23,7 @@ class EditViewController: UIViewController {
         textView.becomeFirstResponder()
     }
     
+    // MARK: - Methods
     private func setupTextView() {
         textView.delegate = self
         textView.font = .systemFont(ofSize: 17)
@@ -42,12 +44,14 @@ class EditViewController: UIViewController {
     }
 }
 
+// MARK: - Protocol methods
 extension EditViewController: EditViewProtocol {
     func setNoteText(_ text: String) {
         textView.text = text
     }
 }
 
+// MARK: - Text View Delegate
 extension EditViewController: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         presenter.noteEdited(textView.text)

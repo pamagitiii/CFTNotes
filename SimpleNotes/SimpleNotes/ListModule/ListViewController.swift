@@ -9,13 +9,14 @@ import UIKit
 
 final class ListViewController: UIViewController {
     
+    
+    // MARK: - Properties
     var presenter: ListPresenterProtocol!
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     private let searchController = UISearchController()
     
+    // MARK: - UI Properties
     private let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-    
-    
     private let notesCountLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15)
@@ -31,6 +32,7 @@ final class ListViewController: UIViewController {
         return button
     }()
     
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -41,8 +43,8 @@ final class ListViewController: UIViewController {
         refreshCountLbl()
     }
     
+    // MARK: - Methods
     private func setupUI() {
-        
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = .systemGray6
         navigationItem.title = "Notes"
@@ -96,6 +98,7 @@ final class ListViewController: UIViewController {
     }
 }
 
+// MARK: - Table View Delegates
 extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 54
@@ -129,6 +132,7 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
+// MARK: - Search Bar Delegates
 extension ListViewController: UISearchBarDelegate, UISearchControllerDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         presenter.search(searchText)
@@ -143,6 +147,7 @@ extension ListViewController: UISearchBarDelegate, UISearchControllerDelegate {
     }
 }
 
+// MARK: - Protocol methods
 extension ListViewController: ListViewProtocol {
     func updateTable(_ updateType: TableControl) {
         switch updateType {
