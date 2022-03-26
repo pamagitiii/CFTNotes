@@ -7,10 +7,8 @@
 
 import Foundation
 
-class EditPresenter {
+final class EditPresenter {
 
-    
-    
     weak var view: EditViewProtocol?
     var router: RouterProtocol?
     let dataManager: CoreDataManagerProtocol!

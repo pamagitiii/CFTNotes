@@ -14,9 +14,7 @@ class EditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        textView.font = .systemFont(ofSize: 17)
-        textView.delegate = self
+        setupTextView()
         setupUI()
     }
     
@@ -25,7 +23,8 @@ class EditViewController: UIViewController {
     }
     
     private func setupTextView() {
-        
+        textView.delegate = self
+        textView.font = .systemFont(ofSize: 17)
     }
     
     private func setupUI() {
@@ -47,8 +46,6 @@ extension EditViewController: EditViewProtocol {
     func setNoteText(_ text: String) {
         textView.text = text
     }
-    
-    
 }
 
 extension EditViewController: UITextViewDelegate {

@@ -14,7 +14,7 @@ final class ListViewController: UIViewController {
     private let searchController = UISearchController()
     
     private let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-
+    
     
     private let notesCountLabel: UILabel = {
         let label = UILabel()
@@ -33,21 +33,19 @@ final class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        view.backgroundColor = .systemGray6
-        tableView.backgroundColor = .clear
-        navigationItem.title = "Main"
         setupUI()
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         configureSearchBar()
         confugureTableView()
-        
         presenter.viewDidLoad()
         refreshCountLbl()
     }
     
     private func setupUI() {
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        view.backgroundColor = .systemGray6
+        navigationItem.title = "Notes"
         view.addSubviews([tableView, visualEffectView])
         
         
@@ -61,7 +59,7 @@ final class ListViewController: UIViewController {
                                      visualEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
                                      visualEffectView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
         
-
+        
         visualEffectView.contentView.addSubviews([notesCountLabel, addButton])
         
         NSLayoutConstraint.activate([notesCountLabel.centerXAnchor.constraint(equalTo: visualEffectView.centerXAnchor),
@@ -84,10 +82,11 @@ final class ListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.showsVerticalScrollIndicator = false
+        tableView.backgroundColor = .clear
         tableView.register(NoteCell.self)
     }
     
-    func refreshCountLbl() {
+    private func refreshCountLbl() {
         guard let count = presenter.result?.count else { return }
         notesCountLabel.text = "\(count) \(count == 1 ? "Note" : "Notes")"
     }
@@ -98,7 +97,6 @@ final class ListViewController: UIViewController {
 }
 
 extension ListViewController: UITableViewDataSource, UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 54
     }
@@ -165,10 +163,12 @@ extension ListViewController: ListViewProtocol {
             tableView.deleteRows(at: [indexPath!], with: .automatic)
         case .move:
             tableView.moveRow(at: indexPath!, to: newIndexPath!)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            }
         case .update:
             tableView.reloadRows(at: [indexPath!], with: .automatic)
         }
-        //tableView.reloadSections(IndexSet(integer: 0), with: .none)
         refreshCountLbl()
     }
 }

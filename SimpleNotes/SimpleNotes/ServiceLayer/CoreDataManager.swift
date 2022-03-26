@@ -75,5 +75,4 @@ class CoreDataManager: CoreDataManagerProtocol {
                                           sectionNameKeyPath: nil,
                                           cacheName: nil)
     }
-
 }

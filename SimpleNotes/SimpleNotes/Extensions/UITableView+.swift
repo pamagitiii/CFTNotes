@@ -43,26 +43,3 @@ extension UITableView {
         return cell
     }
 }
-
-//MARK: - Empty table view extension
-extension UITableView {
-    func showEmptyMessage(_ message: String) {
-        let label: UILabel = {
-            let label = UILabel()
-            label.numberOfLines = 0
-            label.textColor = .systemGray
-            label.textAlignment = .center
-            label.font = .systemFont(ofSize: 24, weight: .semibold)
-            return label
-        }()
-        
-        label.text = message
-        self.backgroundView = label
-        self.separatorStyle = .none
-    }
-    
-    func hideEmptyMessage() {
-        self.backgroundView = nil
-        self.separatorStyle = .singleLine
-    }
-}
